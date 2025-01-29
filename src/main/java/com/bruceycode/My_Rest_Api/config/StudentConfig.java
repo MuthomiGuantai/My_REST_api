@@ -22,19 +22,17 @@ public class StudentConfig implements CommandLineRunner  {
 
         Student victor = new Student(
 
-              //  2L,
+
                 "Victor",
                 "victor@gmail.com",
-                LocalDate.of(2002, Month.MARCH,5),
-                22
+                LocalDate.of(2002, Month.MARCH,5)
         );
         Student bruce = new Student(
 
-              //  1L,
+
                 "Bruce",
                 "bruce@gmail.com",
-                LocalDate.of(1997, Month.DECEMBER,5),
-                30
+                LocalDate.of(1997, Month.DECEMBER,5)
         );
         repository.saveAll(List.of(bruce,victor));
     }
