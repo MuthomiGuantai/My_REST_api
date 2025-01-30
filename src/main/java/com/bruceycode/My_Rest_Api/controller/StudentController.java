@@ -3,7 +3,9 @@ package com.bruceycode.My_Rest_Api.controller;
 import com.bruceycode.My_Rest_Api.model.Student;
 import com.bruceycode.My_Rest_Api.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -19,12 +21,18 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<Student> getStudents(){
+    public List<Student> getStudents() {
         return studentService.getStudents();
 
     }
+
     @PostMapping
-    public void registerNewStudent(@RequestBody Student student){
+    public void registerNewStudent(@RequestBody Student student) {
         studentService.addNewStudent(student);
+    }
+
+    @PutMapping
+    public void editExistingStudent(@RequestBody Student student) {
+        studentService.editStudent(student);
     }
 }
