@@ -1,6 +1,7 @@
 package com.bruceycode.My_Rest_Api.service;
 
 import com.bruceycode.My_Rest_Api.Repository.StudentRepository;
+import com.bruceycode.My_Rest_Api.exceptions.EmailTakenException;
 import com.bruceycode.My_Rest_Api.exceptions.StudentNotFoundException;
 import com.bruceycode.My_Rest_Api.model.Student;
 import jakarta.transaction.Transactional;
@@ -29,7 +30,7 @@ public class StudentService {
        Optional<Student> studentOptional = studentRepository
                .findStudentByEmail(student.getEmail());
        if(studentOptional.isPresent()){
-           throw new IllegalStateException("email taken");
+           throw new EmailTakenException("email taken");
        }
        studentRepository.save(student);
     }
@@ -54,7 +55,7 @@ public class StudentService {
             Optional<Student> studentOptional = studentRepository
                     .findStudentByEmail(email);
             if (studentOptional.isPresent()){
-                throw new IllegalStateException("email taken");
+                throw new EmailTakenException("email taken");
             }
             student.setEmail(email);
         }
