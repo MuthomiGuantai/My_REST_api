@@ -85,7 +85,7 @@ public class StudentServiceTest {
     }
 
     @Test
-    void willBeThrowWhenDeleteStudentNotFound() {
+    void willThrowWhenDeleteStudentNotFound() {
         // given
         given(studentRepository.existsById(student.getId()))
                 .willReturn(false);
@@ -115,4 +115,38 @@ public class StudentServiceTest {
         assertThat(student.getName()).isEqualTo(newName);
         assertThat(student.getEmail()).isEqualTo(newEmail);
     }
+
+    @Test
+    void willThrowWhenUpdateStudentNotFound() {
+        // given
+        given(studentRepository.findById(student.getId()))
+                .willReturn(Optional.empty());
+
+        // when
+        // then
+        assertThatThrownBy(() -> studentService.updateStudent(student.getId(), "Victor Guantai", "victor.guantai@gmal.com"))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("student with id " + student.getId() + " does not exist");
+    }
+
+    @Test
+    void willThrowWhenUpdateStudentEmailIsTaken() {
+        // given
+        Student existingStudent = new Student();
+        existingStudent.setId(2L);
+        existingStudent.setName("Victor Guantai");
+        existingStudent.setEmail("Victor.guantai@gmail.com");
+
+        given(studentRepository.findById(student.getId()))
+                .willReturn(Optional.of(student));
+        given(studentRepository.findStudentByEmail(existingStudent.getEmail()))
+                .willReturn(Optional.of(existingStudent));
+
+        // when
+        // then
+        assertThatThrownBy(() -> studentService.updateStudent(student.getId(), "Victor Guantai", existingStudent.getEmail()))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("email taken");
+    }
+
 }
