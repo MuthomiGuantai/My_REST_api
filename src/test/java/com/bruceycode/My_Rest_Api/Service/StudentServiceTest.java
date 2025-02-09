@@ -163,4 +163,17 @@ public class StudentServiceTest {
         assertThat(result.get()).isEqualTo(student);
     }
 
+    @Test
+    void willThrowWhenGetStudentNotFound() {
+        // given
+        given(studentRepository.findById(student.getId()))
+                .willReturn(Optional.empty());
+
+        // when
+        // then
+        assertThatThrownBy(() -> studentService.getStudent(student.getId()))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessageContaining("student with id " + student.getId() + " doesn't exist");
+    }
+
 }
