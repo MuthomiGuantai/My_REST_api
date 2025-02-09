@@ -1,6 +1,7 @@
 package com.bruceycode.My_Rest_Api.service;
 
 import com.bruceycode.My_Rest_Api.Repository.StudentRepository;
+import com.bruceycode.My_Rest_Api.exceptions.StudentNotFoundException;
 import com.bruceycode.My_Rest_Api.model.Student;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class StudentService {
                                String name,
                                String email){
         Student student = studentRepository.findById(studentId)
-                .orElseThrow(() -> new IllegalStateException(
+                .orElseThrow(() -> new StudentNotFoundException(
                         "student with id " + studentId + " does not exist"));
 
         if (name != null &&
@@ -62,7 +63,7 @@ public class StudentService {
     public void deleteStudent(Long studentId) {
         boolean exists = studentRepository.existsById(studentId);
         if (!exists){
-            throw new IllegalStateException(
+            throw new StudentNotFoundException(
                     "student with id " + studentId + " does not exist");
 
         }
@@ -71,7 +72,7 @@ public class StudentService {
 
 
     public Optional<Student> getStudent(Long studentId) {
-        Student student = studentRepository.findById(studentId).orElseThrow(() -> new RuntimeException(
+        Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException(
                 "student with id " + studentId + " doesn't exist"));
         return studentRepository.findById(studentId);
     }
