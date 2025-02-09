@@ -57,7 +57,7 @@ public class StudentServiceTest {
     }
 
     @Test
-    void willThrowWhenEmailIsTaken() {
+    void willBeThrowWhenEmailIsTaken() {
         // given
         given(studentRepository.findStudentByEmail(student.getEmail()))
                 .willReturn(Optional.of(student));
@@ -69,6 +69,34 @@ public class StudentServiceTest {
                 .hasMessageContaining("email taken");
 
         verify(studentRepository, never()).save(any());
+    }
+
+    @Test
+    void canDeleteStudentSuccessfully() {
+        // given
+        given(studentRepository.existsById(student.getId()))
+                .willReturn(true);
+
+        // when
+        studentService.deleteStudent(student.getId());
+
+        // then
+        verify(studentRepository).deleteById(student.getId());
+    }
+
+    @Test
+    void willBeThrowWhenDeleteStudentNotFound() {
+        // given
+        given(studentRepository.existsById(student.getId()))
+                .willReturn(false);
+
+        // when
+        // then
+        assertThatThrownBy(() -> studentService.deleteStudent(student.getId()))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("student with id " + student.getId() + " does not exist");
+
+        verify(studentRepository, never()).deleteById(any());
     }
 
 
