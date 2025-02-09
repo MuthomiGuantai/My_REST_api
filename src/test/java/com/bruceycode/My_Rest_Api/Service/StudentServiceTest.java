@@ -149,4 +149,18 @@ public class StudentServiceTest {
                 .hasMessageContaining("email taken");
     }
 
+    @Test
+    void canGetStudentByIdSuccessfully() {
+        // given
+        given(studentRepository.findById(student.getId()))
+                .willReturn(Optional.of(student));
+
+        // when
+        Optional<Student> result = studentService.getStudent(student.getId());
+
+        // then
+        assertThat(result).isPresent();
+        assertThat(result.get()).isEqualTo(student);
+    }
+
 }
