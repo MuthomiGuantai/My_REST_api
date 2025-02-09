@@ -6,17 +6,9 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
@@ -62,6 +54,21 @@ public class StudentServiceTest {
         verify(studentRepository).save(studentArgumentCaptor.capture());
         Student capturedStudent = studentArgumentCaptor.getValue();
         assertThat(capturedStudent).isEqualTo(student);
+    }
+
+    @Test
+    void willThrowWhenEmailIsTaken() {
+        // given
+        given(studentRepository.findStudentByEmail(student.getEmail()))
+                .willReturn(Optional.of(student));
+
+        // when
+        // then
+        assertThatThrownBy(() -> studentService.addNewStudent(student))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("email taken");
+
+        verify(studentRepository, never()).save(any());
     }
 
 
