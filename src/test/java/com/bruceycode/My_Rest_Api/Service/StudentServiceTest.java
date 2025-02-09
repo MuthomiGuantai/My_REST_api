@@ -99,5 +99,20 @@ public class StudentServiceTest {
         verify(studentRepository, never()).deleteById(any());
     }
 
+    @Test
+    void canUpdateStudentSuccessfully() {
+        // given
+        given(studentRepository.findById(student.getId()))
+                .willReturn(Optional.of(student));
 
+        String newName = "Victor Guantai";
+        String newEmail = "victor.guantai@gmail.com";
+
+        // when
+        studentService.updateStudent(student.getId(), newName, newEmail);
+
+        // then
+        assertThat(student.getName()).isEqualTo(newName);
+        assertThat(student.getEmail()).isEqualTo(newEmail);
+    }
 }
