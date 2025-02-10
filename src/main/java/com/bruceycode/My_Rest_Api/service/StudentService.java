@@ -30,7 +30,7 @@ public class StudentService {
        Optional<Student> studentOptional = studentRepository
                .findStudentByEmail(student.getEmail());
        if(studentOptional.isPresent()){
-           throw new EmailTakenException("email taken");
+           throw new EmailTakenException("Email taken");
        }
        studentRepository.save(student);
     }
@@ -41,7 +41,7 @@ public class StudentService {
                                String email){
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new StudentNotFoundException(
-                        "student with id " + studentId + " does not exist"));
+                        "Student with id " + studentId + " does not exist"));
 
         if (name != null &&
         name.length() > 0 &&
@@ -55,7 +55,7 @@ public class StudentService {
             Optional<Student> studentOptional = studentRepository
                     .findStudentByEmail(email);
             if (studentOptional.isPresent()){
-                throw new EmailTakenException("email taken");
+                throw new EmailTakenException("Email Taken");
             }
             student.setEmail(email);
         }
@@ -65,7 +65,7 @@ public class StudentService {
         boolean exists = studentRepository.existsById(studentId);
         if (!exists){
             throw new StudentNotFoundException(
-                    "student with id " + studentId + " does not exist");
+                    "Student with id " + studentId + " does not exist");
 
         }
         studentRepository.deleteById(studentId);
@@ -74,7 +74,7 @@ public class StudentService {
 
     public Optional<Student> getStudent(Long studentId) {
         Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException(
-                "student with id " + studentId + " doesn't exist"));
+                "Student with id " + studentId + " doesn't exist"));
         return studentRepository.findById(studentId);
     }
 }

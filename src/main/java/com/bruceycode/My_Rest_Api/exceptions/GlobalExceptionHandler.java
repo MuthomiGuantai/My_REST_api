@@ -1,11 +1,9 @@
-package com.bruceycode.My_Rest_Api.controller;
+package com.bruceycode.My_Rest_Api.exceptions;
 
 import com.bruceycode.My_Rest_Api.entity.errorResponse;
-import com.bruceycode.My_Rest_Api.exceptions.StudentNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -18,16 +16,22 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(StudentNotFoundException.class)
-    public ResponseEntity<?> handleStudentNotFoundException(StudentNotFoundException exception){
+    public ResponseEntity<errorResponse> handleStudentNotFoundException(StudentNotFoundException exception){
         errorResponse studentNotFound = new errorResponse(LocalDateTime.now(), exception.getMessage(), "Student Not Found");
         return new ResponseEntity<>(studentNotFound, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ArrayIndexOutOfBoundsException.class)
-    public ResponseEntity<?> handleStudentNotFoundException(ArrayIndexOutOfBoundsException exception){
+    public ResponseEntity<errorResponse> handleStudentNotFoundException(ArrayIndexOutOfBoundsException exception){
         errorResponse studentNotFound = new errorResponse(LocalDateTime.now(), exception.getMessage(), "Student Not Found");
-        return new ResponseEntity<>(studentNotFound, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(studentNotFound, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(EmailTakenException.class)
+    public ResponseEntity<errorResponse> EmailTakenException(EmailTakenException exception){
+        errorResponse emailTaken = new errorResponse(LocalDateTime.now(), exception.getMessage(), "Email Address Already Registered ");
+        return new ResponseEntity<>(emailTaken, HttpStatus.CONFLICT);
+    }
+
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
