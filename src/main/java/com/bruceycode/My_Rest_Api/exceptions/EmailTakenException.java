@@ -6,7 +6,4 @@ public class EmailTakenException extends RuntimeException{
         super(message);
     }
 
-    public EmailTakenException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }
