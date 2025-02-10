@@ -7,12 +7,15 @@ import com.bruceycode.My_Rest_Api.model.Student;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class StudentService {
 
     private final StudentRepository studentRepository;

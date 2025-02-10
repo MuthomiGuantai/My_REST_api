@@ -1,4 +1,4 @@
-package com.bruceycode.My_Rest_Api.entity;
+package com.bruceycode.My_Rest_Api.model;
 
 import java.time.LocalDateTime;
 

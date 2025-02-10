@@ -1,7 +1,6 @@
 package com.bruceycode.My_Rest_Api.model;
-
 import jakarta.persistence.*;
-
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -19,7 +18,9 @@ public class Student {
             generator = "student_sequence"
     )
     private Long id;
+    @NotNull (message = "Student name cannot be null")
     private String name;
+    @NotNull (message = "Email field cannot be null")
     private String email;
     private LocalDate dob;
     @Transient
