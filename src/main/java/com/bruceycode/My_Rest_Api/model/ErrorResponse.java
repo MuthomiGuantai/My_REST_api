@@ -2,7 +2,7 @@ package com.bruceycode.My_Rest_Api.entity;
 
 import java.time.LocalDateTime;
 
-public class errorResponse {
+public class ErrorResponse {
 
     private LocalDateTime timestamp;
     private String message;
@@ -32,7 +32,7 @@ public class errorResponse {
         this.details = details;
     }
 
-    public errorResponse(LocalDateTime timestamp, String message, String details){
+    public ErrorResponse(LocalDateTime timestamp, String message, String details){
         this.timestamp = timestamp;
         this.message = message;
         this.details = details;
