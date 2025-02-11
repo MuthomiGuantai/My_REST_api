@@ -33,7 +33,7 @@ public class StudentService {
        Optional<Student> studentOptional = studentRepository
                .findStudentByEmail(student.getEmail());
        if(studentOptional.isPresent()){
-           throw new EmailTakenException("Email taken");
+           throw new EmailTakenException("email taken");
        }
        studentRepository.save(student);
     }
