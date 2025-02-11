@@ -26,16 +26,16 @@ public class StudentService {
     }
 
     public List<Student> getStudents(){
-       return studentRepository.findAll();
+        return studentRepository.findAll();
     }
 
     public void addNewStudent(Student student) {
-       Optional<Student> studentOptional = studentRepository
-               .findStudentByEmail(student.getEmail());
-       if(studentOptional.isPresent()){
-           throw new EmailTakenException("email taken");
-       }
-       studentRepository.save(student);
+        Optional<Student> studentOptional = studentRepository
+                .findStudentByEmail(student.getEmail());
+        if(studentOptional.isPresent()){
+            throw new EmailTakenException("email taken");
+        }
+        studentRepository.save(student);
     }
 
     @Transactional
@@ -47,8 +47,8 @@ public class StudentService {
                         "Student with id " + studentId + " does not exist"));
 
         if (name != null &&
-        name.length() > 0 &&
-        !Objects.equals(student.getName(), name)) {
+                name.length() > 0 &&
+                !Objects.equals(student.getName(), name)) {
             student.setName(name);
         }
 
@@ -81,4 +81,3 @@ public class StudentService {
         return studentRepository.findById(studentId);
     }
 }
-
