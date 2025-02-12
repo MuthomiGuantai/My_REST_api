@@ -8,8 +8,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -20,12 +18,16 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
 
+    public String name;
+
+
     @Autowired
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
     public List<Student> getStudents(){
+        log.info("Getting all the students");
         return studentRepository.findAll();
     }
 
@@ -35,32 +37,42 @@ public class StudentService {
         if(studentOptional.isPresent()){
             throw new EmailTakenException("email taken");
         }
+        log.info("New student {} added", student.getName());
         studentRepository.save(student);
     }
 
     @Transactional
-    public  void updateStudent(Long studentId,
-                               String name,
-                               String email){
+    public void updateStudent(Long studentId, String name, String email) {
+
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new StudentNotFoundException(
                         "Student with id " + studentId + " does not exist"));
 
-        if (name != null &&
-                name.length() > 0 &&
-                !Objects.equals(student.getName(), name)) {
+        boolean isUpdated = false;
+
+        // Update name if provided and different
+        if (name != null && name.length() > 0 && !Objects.equals(student.getName(), name)) {
+            log.info("Updating name for student with id {} from {} to {}", studentId, student.getName(), name);
             student.setName(name);
+            isUpdated = true;
         }
 
-        if (email != null &&
-                email.length() > 0 &&
-                !Objects.equals(student.getEmail(), email)) {
-            Optional<Student> studentOptional = studentRepository
-                    .findStudentByEmail(email);
-            if (studentOptional.isPresent()){
+        // Update email if provided and different
+        if (email != null && email.length() > 0 && !Objects.equals(student.getEmail(), email)) {
+            Optional<Student> studentOptional = studentRepository.findStudentByEmail(email);
+            if (studentOptional.isPresent()) {
                 throw new EmailTakenException("Email Taken");
             }
+            log.info("Updating email for student with id {} from {} to {}", studentId, student.getEmail(), email);
             student.setEmail(email);
+            isUpdated = true;
+        }
+
+        if (isUpdated) {
+            studentRepository.save(student);
+            log.info("Student with id {} has been updated successfully.", studentId);
+        } else {
+            log.info("No changes detected for student with id {}.", studentId);
         }
     }
 
@@ -71,6 +83,7 @@ public class StudentService {
                     "Student with id " + studentId + " does not exist");
 
         }
+        log.info("Deleting student with id " + studentId);
         studentRepository.deleteById(studentId);
     }
 
@@ -78,6 +91,7 @@ public class StudentService {
     public Optional<Student> getStudent(Long studentId) {
         Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException(
                 "Student with id " + studentId + " doesn't exist"));
+        log.info("Getting student with id " + studentId );
         return studentRepository.findById(studentId);
     }
 }
