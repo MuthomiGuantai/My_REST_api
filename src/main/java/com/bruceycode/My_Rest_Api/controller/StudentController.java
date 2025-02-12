@@ -51,4 +51,10 @@ public class StudentController {
         studentService.printDataSourceDetails();
         return "DataSource details printed to console!";
     }
+
+    @GetMapping("/print-setvaluedatasource")
+    public String setValueDtSourceConfig() {
+        studentService.setValueDtSourceConfig();
+        return "DataSource details printed to console!";
+    }
 }

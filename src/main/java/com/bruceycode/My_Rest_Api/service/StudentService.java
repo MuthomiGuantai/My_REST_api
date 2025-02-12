@@ -2,6 +2,7 @@ package com.bruceycode.My_Rest_Api.service;
 
 import com.bruceycode.My_Rest_Api.Repository.StudentRepository;
 import com.bruceycode.My_Rest_Api.config.DataSourceConfig;
+import com.bruceycode.My_Rest_Api.config.ValueDtSourceConfig;
 import com.bruceycode.My_Rest_Api.exceptions.EmailTakenException;
 import com.bruceycode.My_Rest_Api.exceptions.StudentNotFoundException;
 import com.bruceycode.My_Rest_Api.model.Student;
@@ -17,13 +18,15 @@ import java.util.Optional;
 @Slf4j
 public class StudentService {
 
+    private final ValueDtSourceConfig valueDtSourceConfig;
     private final DataSourceConfig dataSourceConfig;
     private final StudentRepository studentRepository;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository, DataSourceConfig dataSourceConfig) {
+    public StudentService(StudentRepository studentRepository, DataSourceConfig dataSourceConfig, ValueDtSourceConfig valueDtSourceConfig) {
         this.studentRepository = studentRepository;
         this.dataSourceConfig = dataSourceConfig;
+        this.valueDtSourceConfig = valueDtSourceConfig;
     }
 
     public List<Student> getStudents() {
@@ -95,5 +98,12 @@ public class StudentService {
         System.out.println("DataSource URL: " + dataSourceConfig.getUrl());
         System.out.println("DataSource Username: " + dataSourceConfig.getUsername());
         System.out.println("DataSource Password: " + dataSourceConfig.getPassword());
+    }
+
+    public void setValueDtSourceConfig() {
+        System.out.println("DataSource URL: " + valueDtSourceConfig.getServerPort());
+        System.out.println("DataSource Username: " + valueDtSourceConfig.getDatasourceUrl());
+        System.out.println("DataSource Password: " + valueDtSourceConfig.getDatasourceUsername());
+        System.out.println("DataSource Password: " + valueDtSourceConfig.getDatasourcePassword());
     }
 }

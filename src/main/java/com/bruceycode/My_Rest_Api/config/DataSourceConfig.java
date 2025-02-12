@@ -10,7 +10,6 @@ public class DataSourceConfig {
     private String username;
     private String password;
 
-    // Getters and Setters
     public String getUrl() {
         return url;
     }
