@@ -45,4 +45,10 @@ public class StudentController {
             @RequestParam(required = false) String email) {
         studentService.updateStudent(studentId, name, email);
     }
+
+    @GetMapping("/print-datasource")
+    public String printDataSource() {
+        studentService.printDataSourceDetails();
+        return "DataSource details printed to console!";
+    }
 }
