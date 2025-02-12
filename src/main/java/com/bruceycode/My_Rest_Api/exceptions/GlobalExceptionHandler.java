@@ -8,16 +8,18 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
+import lombok.extern.slf4j.Slf4j;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(StudentNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleStudentNotFoundException(StudentNotFoundException exception){
         ErrorResponse studentNotFound = new ErrorResponse(LocalDateTime.now(), exception.getMessage(), "Student Not Found");
+        log.warn("Resource not found: {}", exception.getMessage());
         return new ResponseEntity<>(studentNotFound, HttpStatus.NOT_FOUND);
     }
 
@@ -29,6 +31,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EmailTakenException.class)
     public ResponseEntity<ErrorResponse> EmailTakenException(EmailTakenException exception){
         ErrorResponse emailTaken = new ErrorResponse(LocalDateTime.now(), exception.getMessage(), "Email Address Already Registered ");
+        log.error("Resource conflict: {}", exception.getMessage());
         return new ResponseEntity<>(emailTaken, HttpStatus.CONFLICT);
     }
 

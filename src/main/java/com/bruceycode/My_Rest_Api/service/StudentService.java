@@ -35,6 +35,7 @@ public class StudentService {
         Optional<Student> studentOptional = studentRepository
                 .findStudentByEmail(student.getEmail());
         if(studentOptional.isPresent()){
+            log.error("Email address {} is already registered", student.getEmail());
             throw new EmailTakenException("email taken");
         }
         log.info("New student {} added", student.getName());
@@ -61,6 +62,7 @@ public class StudentService {
         if (email != null && email.length() > 0 && !Objects.equals(student.getEmail(), email)) {
             Optional<Student> studentOptional = studentRepository.findStudentByEmail(email);
             if (studentOptional.isPresent()) {
+                log.error("Email address {} is already registered", student.getEmail());
                 throw new EmailTakenException("Email Taken");
             }
             log.info("Updating email for student with id {} from {} to {}", studentId, student.getEmail(), email);
@@ -79,6 +81,7 @@ public class StudentService {
     public void deleteStudent(Long studentId) {
         boolean exists = studentRepository.existsById(studentId);
         if (!exists){
+            log.error("Student with id {} does not exist", studentId);
             throw new StudentNotFoundException(
                     "Student with id " + studentId + " does not exist");
 
