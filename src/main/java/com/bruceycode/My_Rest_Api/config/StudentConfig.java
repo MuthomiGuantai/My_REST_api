@@ -23,15 +23,15 @@ public class StudentConfig implements CommandLineRunner {
         Student victor = new Student(
 
 
-                "Victor",
-                "victor@gmail.com",
+                "VictorGatundu",
+                "victor.gatundu@gmail.com",
                 LocalDate.of(2002, Month.MARCH, 5)
         );
         Student bruce = new Student(
 
 
-                "Bruce",
-                "bruce@gmail.com",
+                "BruceMuthomi",
+                "bruce.guantai@gmail.com",
                 LocalDate.of(1997, Month.DECEMBER, 5)
         );
         repository.saveAll(List.of(bruce, victor));

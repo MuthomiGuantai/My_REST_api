@@ -3,6 +3,7 @@ package com.bruceycode.My_Rest_Api.Repository;
 import com.bruceycode.My_Rest_Api.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -13,5 +14,9 @@ public interface StudentRepository
 
     @Query("SELECT s FROM Student s WHERE s.email = ?1")
     Optional<Student> findStudentByEmail(String email);
+
+    @Query("SELECT COUNT(s) > 0 FROM Student s WHERE s.name = :name")
+    boolean existsByName(@Param("name") String name);
+
 
 }

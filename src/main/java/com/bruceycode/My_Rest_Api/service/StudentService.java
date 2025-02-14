@@ -101,7 +101,8 @@ public class StudentService {
     }
 
     public void setValueDtSourceConfig() {
-        System.out.println("DataSource URL: " + valueDtSourceConfig.getServerPort());
+        System.out.println("DataSource URL: " + valueDtSourceConfig.getDatasourceUrl());
+        System.out.println("DataSource serverPort: " + valueDtSourceConfig.getServerPort());
         System.out.println("DataSource Username: " + valueDtSourceConfig.getDatasourceUrl());
         System.out.println("DataSource Password: " + valueDtSourceConfig.getDatasourceUsername());
         System.out.println("DataSource Password: " + valueDtSourceConfig.getDatasourcePassword());

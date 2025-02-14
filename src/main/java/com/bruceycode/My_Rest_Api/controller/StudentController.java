@@ -1,6 +1,7 @@
 package com.bruceycode.My_Rest_Api.controller;
 import com.bruceycode.My_Rest_Api.model.Student;
 import com.bruceycode.My_Rest_Api.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -29,7 +30,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public void registerNewStudent(@RequestBody Student student) {
+    public void registerNewStudent(@Valid @RequestBody Student student) {
         studentService.addNewStudent(student);
     }
 
