@@ -6,6 +6,7 @@ import com.bruceycode.My_Rest_Api.config.ValueDtSourceConfig;
 import com.bruceycode.My_Rest_Api.exceptions.EmailTakenException;
 import com.bruceycode.My_Rest_Api.exceptions.StudentNotFoundException;
 import com.bruceycode.My_Rest_Api.model.Student;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,18 +17,14 @@ import java.util.Optional;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class StudentService {
 
     private final ValueDtSourceConfig valueDtSourceConfig;
     private final DataSourceConfig dataSourceConfig;
     private final StudentRepository studentRepository;
 
-    @Autowired
-    public StudentService(StudentRepository studentRepository, DataSourceConfig dataSourceConfig, ValueDtSourceConfig valueDtSourceConfig) {
-        this.studentRepository = studentRepository;
-        this.dataSourceConfig = dataSourceConfig;
-        this.valueDtSourceConfig = valueDtSourceConfig;
-    }
+
 
     public List<Student> getStudents() {
         log.info("Getting all the students");

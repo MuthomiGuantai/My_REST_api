@@ -1,4 +1,4 @@
-package com.bruceycode.My_Rest_Api.util.validation;
+package com.bruceycode.My_Rest_Api.util.Validation;
 
 import com.bruceycode.My_Rest_Api.Repository.StudentRepository;
 import jakarta.validation.ConstraintValidator;

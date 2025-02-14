@@ -1,14 +1,16 @@
 package com.bruceycode.My_Rest_Api.model;
-import com.bruceycode.My_Rest_Api.util.validation.Adult;
-import com.bruceycode.My_Rest_Api.util.validation.ValidEmailDomain;
+import com.bruceycode.My_Rest_Api.util.Validation.Adult;
+import com.bruceycode.My_Rest_Api.util.Validation.ValidEmailDomain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.Period;
 
 @Entity
 @Table
+@Data
 public class Student {
     @Id
     @SequenceGenerator(
@@ -21,9 +23,9 @@ public class Student {
             generator = "student_sequence"
     )
     private Long id;
-    @NotNull(message = "name cannot be null")
-    @Size(min = 8, max = 20, message = "Username must be between 8 and 20 characters")
-    @Pattern(regexp = "^[a-zA-Z0-9_\\s]+$", message = "Username can only contain letters, numbers, underscores and space")
+    @NotNull(message = "Name cannot be null")
+    @Size(min = 8, max = 20, message = "Name must be between 8 and 20 characters")
+    @Pattern(regexp = "^[a-zA-Z0-9_\\s]+$", message = "Name can only contain letters, numbers, underscores and space")
     private String name;
 
     @NotNull(message = "Email cannot be null")
@@ -42,19 +44,6 @@ public class Student {
 
     }
 
-    public Student(Long id,
-                   String name,
-                   String email,
-                   LocalDate dob
-
-                   ) {
-
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.dob = dob;
-    }
-
     public Student(String name,
                    String email,
                    LocalDate dob) {
@@ -63,55 +52,5 @@ public class Student {
         this.dob = dob;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public LocalDate getDob() {
-        return dob;
-    }
-
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
-
-    public Integer getAge() {
-        return Period.between(this.dob, LocalDate.now()).getYears();
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    @Override
-    public String toString() {
-        return "student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", dob=" + dob +
-                ", age=" + age +
-                '}';
-    }
 
 }
